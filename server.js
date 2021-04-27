@@ -25,6 +25,12 @@ app.get('/api/hello',(req,res)=>{
     res.send({message:'Hello Express!'});
 });
 */
+app.get('/TestGet',(req,res)=>{
+  res.send(['Hello get']);
+});
+app.post('/TestPost',(req,res)=>{
+  console.log(req.body.id)
+});
 app.get('/api/customers',(req,res)=>{
    res.send([
     {

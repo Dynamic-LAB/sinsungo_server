@@ -6,7 +6,6 @@ exports.login = (req, res) => {
 			message: "empty body" 
 		});
 	}
-
 	User.findOne(req.body.id, req.body.login_type, (err, data) => {
 		if (err) {
 			res.status(500).json({
@@ -15,12 +14,12 @@ exports.login = (req, res) => {
 		} else if (data) {
 			res.status(200).json(data);
 		} else {
+			console.log('회원가입 실행.');
 			const user = new User({
 				id: req.body.id,
 				loginType: req.body.login_type,
 				name: req.body.name
 			});
-
 			User.create(user, (err, data) => {
 				if (err) {
 					res.status(500).json({
