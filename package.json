@@ -1,0 +1,31 @@
+{
+  "name": "sinsungo_server",
+  "version": "1.0.0",
+  "description": "웹,앱 데이터 파싱을 위한 공통의 API를 제공하는 서버이다.",
+  "main": "index.js",
+  "scripts": {
+    "cl": "cd client",
+    "liclient": "cd client && yarn listart",
+    "winclient": "cd client && yarn winstart",
+    "server": "nodemon server.js",
+    "lidev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn liclient\"",
+    "windev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn winclient\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dynamic-LAB/sinsungo_server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dynamic-LAB/sinsungo_server/issues"
+  },
+  "homepage": "https://github.com/Dynamic-LAB/sinsungo_server#readme",
+  "dependencies": {
+    "dotenv": "^8.5.1",
+    "json-groupby": "^1.1.0",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.2.5",
+    "nodemon": "^2.0.7"
+  }
+}
