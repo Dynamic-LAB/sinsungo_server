@@ -41,12 +41,14 @@ exports.findOne = (req, res) => {
 };
 
 exports.getIngredient = (req, res) => {
-	Refrigerator.findAll(req.params.id, (err, data) => {
+	 // 웹의 경우 params가 아닌 req.query.id 를 이용
+	Refrigerator.findAll(req.query.id, (err, data) => {
 		if (err) {
 			res.status(500).json({
 				message: err.message
 			});
 		} else {
+			console.log('냉장고 번호 '+req.query.id+'번의 재료들을 보내줍니다.')
 			res.status(200).json(data);
 		}
 	});

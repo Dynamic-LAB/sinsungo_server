@@ -26,6 +26,7 @@ app.get('/api/hello',(req,res)=>{
 });
 */
 app.get('/TestGet',(req,res)=>{
+  console.log(req);
   res.send(['Hello get']);
 });
 app.post('/TestPost',(req,res)=>{

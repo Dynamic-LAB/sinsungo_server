@@ -13,6 +13,7 @@ exports.login = (req, res) => {
 			});
 		} else if (data) {
 			res.status(200).json(data);
+			console.log("'"+req.body.name+"'"+'님 '+req.body.login_type+'계정으로 로그인');
 		} else {
 			console.log('회원가입 실행.');
 			const user = new User({
