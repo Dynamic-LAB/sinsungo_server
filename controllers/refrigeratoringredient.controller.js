@@ -8,13 +8,13 @@ exports.create = (req, res) => {
 	}
 
 	const refrigeratorIngredient = new RefrigeratorIngredient({
+		id: req.body.id,
 		category: req.body.category,
 		name: req.body.name,
 		amount: req.body.amount,
 		unit:req.body.unit,
 		expirationType: req.body.expiration_type,
 		expirationDate: req.body.expiration_date,
-		refrigeratorId: req.body.refrigerator_id
 	});
 
 	RefrigeratorIngredient.create(refrigeratorIngredient, (err, data) => {
@@ -52,13 +52,13 @@ exports.update = (req, res) => {
 	}
 
 	const refrigeratorIngredient = new RefrigeratorIngredient({
+		id: req.body.id,
 		category: req.body.category,
 		name: req.body.name,
 		amount: req.body.amount,
 		unit:req.body.unit,
 		expirationType: req.body.expiration_type,
 		expirationDate: req.body.expiration_date,
-		refrigeratorId: req.body.refrigerator_id
 	});
 	
 	RefrigeratorIngredient.update(req.params.id, refrigeratorIngredient, (err, data) => {

@@ -2,20 +2,20 @@ const db = require('../config/db.config');
 
 module.exports = class RefrigeratorIngredient {
 	constructor(refrigeratorIngredient) {
+		this.id = refrigeratorIngredient.id;
 		this.category = refrigeratorIngredient.category;
 		this.name = refrigeratorIngredient.name;
 		this.amount = refrigeratorIngredient.amount;
 		this.unit = refrigeratorIngredient.unit;
 		this.expirationType = refrigeratorIngredient.expirationType;
 		this.expirationDate = refrigeratorIngredient.expirationDate;
-		this.refrigeratorId = refrigeratorIngredient.refrigeratorId;
 	};
 	
 	static create(refingredient, result) {
 		db((conn) => {
 			conn.execute(
 				"INSERT INTO `refrigeratoringredient`(`category`, `name`, `amount`, `unit`, `expiration_type`, `expiration_date`, `refrigerator_id`) VALUES(?, ?, ?, ?, ?, ?, ?)", 
-				[refingredient.category, refingredient.name, refingredient.amount, refingredient.unit, refingredient.expirationType, refingredient.expirationDate, refingredient.refrigeratorId], 
+				[refingredient.category, refingredient.name, refingredient.amount, refingredient.unit, refingredient.expirationType, refingredient.expirationDate, refingredient.id],
 				(err, res) => {
 				    if (err) {
 				      result(err, null);
@@ -47,10 +47,10 @@ module.exports = class RefrigeratorIngredient {
 		});
 	};
 
-	static update(id, refingredient, result) {
+	static update(refrigeratorId, refingredient, result) {
 		db((conn) => {
-			conn.execute("UPDATE `refrigeratoringredient` SET `category` = ?, `name` = ?, `amount` = ?, `unit` = ?, `expiration_type` = ?, `expiration_date` = ? WHERE `id` = ?", 
-				[refingredient.category, refingredient.name, refingredient.amount, refingredient.unit, refingredient.expirationType, refingredient.expirationDate, id], 
+			conn.execute("UPDATE `refrigeratoringredient` SET `category` = ?, `name` = ?, `amount` = ?, `unit` = ?, `expiration_type` = ?, `expiration_date` = ?, `refrigerator_id` = ? WHERE `id` = ?",
+				[refingredient.category, refingredient.name, refingredient.amount, refingredient.unit, refingredient.expirationType, refingredient.expirationDate, refrigeratorId, refingredient.id],
 					(err, res) => {
 				    if (err) {
 				      result(err, null);
@@ -62,7 +62,7 @@ module.exports = class RefrigeratorIngredient {
 				      return;
 				    }
 
-					result(null, { id: id, ...refingredient });
+					result(null, { ...refingredient });
 			});
 			conn.release();
 		});		
