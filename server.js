@@ -4,11 +4,13 @@ const app= express();
 const morgan = require('morgan');
 const port = process.env.PORT || 5001;
 
+
 const userRouter = require('./routes/user.route');
 const refrigeratorRouter = require('./routes/refrigerator.route');
 const recipeRouter = require('./routes/recipe.route');
 const searchRouter = require('./routes/search.route');
 const shoppingListRouter = require('./routes/shoppinglist.route');
+
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -19,6 +21,7 @@ app.use('/refrigerator', refrigeratorRouter);
 app.use('/recipe', recipeRouter);
 app.use('/search', searchRouter);
 app.use('/shoppinglist', shoppingListRouter);
+
 
 /*
 app.get('/api/hello',(req,res)=>{
