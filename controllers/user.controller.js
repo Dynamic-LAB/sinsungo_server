@@ -1,3 +1,4 @@
+// 충돌 테스트
 const User = require('../models/user.model');
 
 exports.login = (req, res) => {
