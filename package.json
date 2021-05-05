@@ -22,7 +22,9 @@
   },
   "homepage": "https://github.com/Dynamic-LAB/sinsungo_server#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "dotenv": "^8.5.1",
+    "express": "^4.17.1",
     "json-groupby": "^1.1.0",
     "morgan": "^1.10.0",
     "mysql2": "^2.2.5",
