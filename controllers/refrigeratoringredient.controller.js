@@ -44,6 +44,18 @@ exports.findOne = (req, res) => {
 	});
 };
 
+exports.getIngredient = (req, res) => {
+	RefrigeratorIngredient.findAll(req.params.id, (err, data) => {
+		if (err) {
+			res.status(500).json({
+				message: err.message
+			});
+		} else {
+			res.status(200).json(data);
+		}
+	});
+};
+
 exports.update = (req, res) => {
 	if (!req.body) {
 		res.status(400).json({

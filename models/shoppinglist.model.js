@@ -17,8 +17,7 @@ module.exports = class ShoppingList {
 				      result(err, null);
 				      return;
 				    }
-
-					result(null, shoppingList);
+					result(null, { id: res.insertId, ...shoppingList });
 			});
 			conn.release();
 		});
@@ -54,7 +53,7 @@ module.exports = class ShoppingList {
 				      return;
 				    }
 
-					result(null, { ...shoppingList });
+					result(null, { id: id, ...shoppingList });
 			});
 			conn.release();
 		});		
