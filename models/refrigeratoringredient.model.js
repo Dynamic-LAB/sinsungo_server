@@ -22,6 +22,7 @@ module.exports = class RefrigeratorIngredient {
 				      return;
 				    }
 
+				    refingredient.id = res.insertId;
 					result(null, refingredient);
 			});
 			conn.release();
@@ -43,6 +44,21 @@ module.exports = class RefrigeratorIngredient {
 
 				result(null, null);
 			});
+			conn.release();
+		});
+	};
+
+	static findAll(id, result) {
+		db((conn) => {
+			conn.execute("SELECT `id`, `category`, `name`, `amount`, `unit`, `expiration_type`, `expiration_date` FROM `refrigerator_ingredient` WHERE `refrigerator_id` = ?",
+				[id], (err, res) => {
+					if (err) {
+						result(err, null);
+						return;
+					}
+
+					result(null, res);
+				});
 			conn.release();
 		});
 	};
