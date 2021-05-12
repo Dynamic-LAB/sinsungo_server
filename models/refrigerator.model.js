@@ -3,6 +3,7 @@ const db = require('../config/db.config');
 module.exports = class Refrigerator {
 	constructor(refrigerator) {
 		this.master = refrigerator.master;
+		this.limit = refrigerator.limit;
 		this.inviteKey = refrigerator.inviteKey;
 	};
 	
@@ -41,14 +42,13 @@ module.exports = class Refrigerator {
 
 	static findAll(id, result) {
 		db((conn) => {
-			conn.execute("SELECT `id`, `category`, `name`, `amount`, `unit`, `expiration_type`, `expiration_date` FROM `refrigerator_ingredient` WHERE `refrigerator_id` = ?", 
-				[id], (err, res) => {
-					if (err) {
-						result(err, null);
-						return;
-					}
+			conn.execute("SELECT `master`, `limit`, `invite_key`, `id`, `login_type`, `name`, `push_token` FROM `refrigerator_member` WHERE `refrigerator_id` = ?", [id], (err, res) => {
+				if (err) {
+					result(err, null);
+					return;
+				}
 
-					result(null, res);
+				result(null, res);
 			});
 			conn.release();
 		});
@@ -56,7 +56,7 @@ module.exports = class Refrigerator {
 
 	static update(id, refrigerator, result) {
 		db((conn) => {
-			conn.execute("UPDATE `refrigerator` SET `master` = ?, `limit` = ? WHERE `id` = ?", [refrigerator.master, refrigerator.limit, id], (err, res) => {
+			conn.execute("UPDATE `refrigerator` SET `master` = ?, `limit` = ?, `invite_key` = ? WHERE `id` = ?", [refrigerator.master, refrigerator.limit, refrigerator.inviteKey, id], (err, res) => {
 			    if (err) {
 			      result(err, null);
 			      return;

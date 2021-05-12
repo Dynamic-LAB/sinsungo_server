@@ -10,6 +10,7 @@ exports.create = (req, res) => {
 
 	const refrigerator = new Refrigerator({
 		master: req.body.master,
+		limit: req.body.limit,
 		inviteKey: req.body.invite_key
 	});
 
@@ -40,14 +41,33 @@ exports.findOne = (req, res) => {
 	});
 };
 
-exports.getIngredient = (req, res) => {
+exports.getMember = (req, res) => {
 	Refrigerator.findAll(req.params.id, (err, data) => {
 		if (err) {
 			res.status(500).json({
 				message: err.message
 			});
 		} else {
-			res.status(200).json(data);
+			const refrigerator = new Refrigerator({
+				master: data[0].master,
+				limit: data[0].limit,
+				inviteKey: data[0].invite_key
+			});
+
+			refrigerator.members = [];
+
+			data.forEach(d => {
+				const newMember = {
+					id: d.id,
+					loginType: d.login_type,
+					name: d.name,
+					pushToken: d.push_token
+				};
+
+				refrigerator.members.push(newMember);
+			});
+
+			res.status(200).json(refrigerator);
 		}
 	});
 };
@@ -61,6 +81,7 @@ exports.update = (req, res) => {
 
 	const refrigerator = new Refrigerator({
 		master: req.body.master,
+		limit: req.body.limit,
 		inviteKey: req.body.invite_key
 	});
 
