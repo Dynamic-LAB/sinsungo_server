@@ -13,8 +13,8 @@ exports.create = (req, res) => {
 		name: req.body.name,
 		amount: req.body.amount,
 		unit:req.body.unit,
-		expirationType: req.body.expiration_type,
-		expirationDate: req.body.expiration_date,
+		expiration_type: req.body.expiration_type,
+		expiration_date: req.body.expiration_date,
 	});
 
 	RefrigeratorIngredient.create(refrigeratorIngredient, (err, data) => {
@@ -69,8 +69,8 @@ exports.update = (req, res) => {
 		name: req.body.name,
 		amount: req.body.amount,
 		unit:req.body.unit,
-		expirationType: req.body.expiration_type,
-		expirationDate: req.body.expiration_date,
+		expiration_type: req.body.expiration_type,
+		expiration_date: req.body.expiration_date,
 	});
 	
 	RefrigeratorIngredient.update(req.params.id, refrigeratorIngredient, (err, data) => {
