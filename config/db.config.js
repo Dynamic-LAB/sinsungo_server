@@ -1,6 +1,6 @@
-
 const mysql = require('mysql2');
-require("dotenv").config();
+require('dotenv').config();
+
 const db = 	mysql.createPool({
 	//host 로컬 테스트를 위해선  IP , 서버에서는 localhost
 	host: process.env.host,
@@ -8,7 +8,7 @@ const db = 	mysql.createPool({
 	password: process.env.password,
 	database: process.env.database,
 	multipleStatements: true,
-	dateStrings: process.env.date
+	dateStrings: "date"
 });
 
 function getConnection(callback) {
