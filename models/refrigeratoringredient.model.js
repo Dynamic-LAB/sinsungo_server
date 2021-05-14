@@ -7,15 +7,15 @@ module.exports = class RefrigeratorIngredient {
 		this.name = refrigeratorIngredient.name;
 		this.amount = refrigeratorIngredient.amount;
 		this.unit = refrigeratorIngredient.unit;
-		this.expirationType = refrigeratorIngredient.expirationType;
-		this.expirationDate = refrigeratorIngredient.expirationDate;
+		this.expiration_type = refrigeratorIngredient.expiration_type;
+		this.expiration_date = refrigeratorIngredient.expiration_date;
 	};
 	
 	static create(refingredient, result) {
 		db((conn) => {
 			conn.execute(
 				"INSERT INTO `refrigeratoringredient`(`category`, `name`, `amount`, `unit`, `expiration_type`, `expiration_date`, `refrigerator_id`) VALUES(?, ?, ?, ?, ?, ?, ?)", 
-				[refingredient.category, refingredient.name, refingredient.amount, refingredient.unit, refingredient.expirationType, refingredient.expirationDate, refingredient.id],
+				[refingredient.category, refingredient.name, refingredient.amount, refingredient.unit, refingredient.expiration_type, refingredient.expiration_date, refingredient.id],
 				(err, res) => {
 				    if (err) {
 				      result(err, null);
@@ -66,7 +66,7 @@ module.exports = class RefrigeratorIngredient {
 	static update(refrigeratorId, refingredient, result) {
 		db((conn) => {
 			conn.execute("UPDATE `refrigeratoringredient` SET `category` = ?, `name` = ?, `amount` = ?, `unit` = ?, `expiration_type` = ?, `expiration_date` = ?, `refrigerator_id` = ? WHERE `id` = ?",
-				[refingredient.category, refingredient.name, refingredient.amount, refingredient.unit, refingredient.expirationType, refingredient.expirationDate, refrigeratorId, refingredient.id],
+				[refingredient.category, refingredient.name, refingredient.amount, refingredient.unit, refingredient.expiration_type, refingredient.expiration_date, refrigeratorId, refingredient.id],
 					(err, res) => {
 				    if (err) {
 				      result(err, null);
