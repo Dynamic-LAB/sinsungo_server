@@ -10,7 +10,7 @@ const refrigeratorRouter = require('./routes/refrigerator.route');
 const recipeRouter = require('./routes/recipe.route');
 const searchRouter = require('./routes/search.route');
 const shoppingListRouter = require('./routes/shoppinglist.route');
-
+const dietRouter = require('./routes/diet.route');
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -21,6 +21,7 @@ app.use('/refrigerator', refrigeratorRouter);
 app.use('/recipe', recipeRouter);
 app.use('/search', searchRouter);
 app.use('/shoppinglist', shoppingListRouter);
+app.use('/diet', dietRouter);
 
 
 /*
