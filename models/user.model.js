@@ -3,13 +3,13 @@ const db = require('../config/db.config');
 module.exports = class User {
 	constructor(user) {
 		this.id = user.id;
-		this.loginType = user.loginType;
+		this.login_type = user.login_type;
 		this.name = user.name;
 	}
 	
 	static create(newUser, result) {
 		db((conn) => {
-			conn.execute("INSERT INTO `user`(`id`, `login_type`, `name`) VALUES(?, ?, ?)", [newUser.id, newUser.loginType, newUser.name], (err, res) => {
+			conn.execute("INSERT INTO `user`(`id`, `login_type`, `name`) VALUES(?, ?, ?)", [newUser.id, newUser.login_type, newUser.name], (err, res) => {
 			    if (err) {
 			      result(err, null);
 			      return;
@@ -56,18 +56,20 @@ module.exports = class User {
 
 	static update(user, result) {
 		db((conn) => {
-			conn.execute("UPDATE `user` SET `name` = ? WHERE `id` = ? and `login_type` = ?", [user.name, user.id, user.loginType], (err, res) => {
-			    if (err) {
-			      result(err, null);
-			      return;
-			    }
+			conn.execute("UPDATE `user` SET `name` = ?, `refrigerator_id` = ?, `push_token` = ?, `push_setting` = ? WHERE `id` = ? and `login_type` = ?",
+				[user.name, user.refrigerator_id, user.push_token, user.push_setting, user.id, user.login_type],
+				(err, res) => {
+					if (err) {
+					  result(err, null);
+					  return;
+					}
 
-			    if (res.affectedRows == 0) {
-			      result({ message: "not found" }, null);
-			      return;
-			    }
+					if (res.affectedRows == 0) {
+					  result({ message: "not found" }, null);
+					  return;
+					}
 
-				result(null, { ...user });
+					result(null, user);
 			});
 			conn.release();
 		});		
@@ -90,6 +92,5 @@ module.exports = class User {
 			});
 			conn.release();
 		});
-		
 	};
 };
