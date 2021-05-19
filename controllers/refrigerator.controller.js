@@ -10,8 +10,7 @@ exports.create = (req, res) => {
 
 	const refrigerator = new Refrigerator({
 		master: req.body.master,
-		limit: req.body.limit,
-		inviteKey: req.body.invite_key
+		invite_key: req.body.invite_key
 	});
 
 	Refrigerator.create(refrigerator, (err, data) => {
@@ -51,7 +50,7 @@ exports.getMember = (req, res) => {
 			const refrigerator = new Refrigerator({
 				master: data[0].master,
 				limit: data[0].limit,
-				inviteKey: data[0].invite_key
+				invite_key: data[0].invite_key
 			});
 
 			refrigerator.members = [];
@@ -59,9 +58,9 @@ exports.getMember = (req, res) => {
 			data.forEach(d => {
 				const newMember = {
 					id: d.id,
-					loginType: d.login_type,
+					login_type: d.login_type,
 					name: d.name,
-					pushToken: d.push_token
+					push_token: d.push_token
 				};
 
 				refrigerator.members.push(newMember);
@@ -82,7 +81,7 @@ exports.update = (req, res) => {
 	const refrigerator = new Refrigerator({
 		master: req.body.master,
 		limit: req.body.limit,
-		inviteKey: req.body.invite_key
+		invite_key: req.body.invite_key
 	});
 
 	Refrigerator.update(req.params.id, refrigerator, (err, data) => {

@@ -15,13 +15,8 @@ exports.login = (req, res) => {
 		} else if (data) {
 			res.status(200).json(data);
 		} else {
-			const user = new User({
-				id: req.body.id,
-				loginType: req.body.login_type,
-				name: req.body.name
-			});
 
-			User.create(user, (err, data) => {
+			User.create(req.body, (err, data) => {
 				if (err) {
 					res.status(500).json({
 						message: err.message
@@ -34,5 +29,40 @@ exports.login = (req, res) => {
 	});
 };
 
+exports.update = (req, res) => {
+	if (!req.body) {
+		res.status(400).json({
+			message: "empty body"
+		});
+	}
 
-// 다른 함수 추가
+	User.update(req.body, (err, data) => {
+		if (err) {
+			if (err.message == "not found") {
+				res.status(404).json({
+					message: err.message
+				});
+			} else {
+				res.status(500).json({
+					message: err.message
+				});
+			}
+		} else res.status(200).json(data);
+	});
+};
+
+exports.delete = (req, res) => {
+	User.delete(req.params.id, req.body.login_type,(err, data) => {
+		if (err) {
+			if (err.message == "not found") {
+				res.status(404).json({
+					message: err.message
+				});
+			} else {
+				res.status(500).json({
+					message: err.message
+				});
+			}
+		} else res.status(200).json({ message: "delete success"});
+	});
+};
