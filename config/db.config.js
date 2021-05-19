@@ -14,7 +14,7 @@ const db = 	mysql.createPool({
 function getConnection(callback) {
 	db.getConnection((err, conn) => {
 		if (err) {
-			throw error;
+			throw err;
 		} else {
 			callback(conn);
 		}
