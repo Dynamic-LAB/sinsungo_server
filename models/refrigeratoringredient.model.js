@@ -50,6 +50,7 @@ module.exports = class RefrigeratorIngredient {
 
 	static findAll(id, result) {
 		db((conn) => {
+
 			conn.execute("SELECT `id`, `category`, `name`, `amount`, `unit`, `expiration_type`, `expiration_date`,now() as today FROM `refrigerator_ingredient` WHERE `refrigerator_id` = ?",
 				[id], (err, res) => {
 					if (err) {
