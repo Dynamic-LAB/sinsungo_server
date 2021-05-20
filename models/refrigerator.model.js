@@ -42,7 +42,7 @@ module.exports = class Refrigerator {
 
 	static findAll(id, result) {
 		db((conn) => {
-			conn.execute("SELECT `master`, `limit`, `invite_key`, `id`, `login_type`, `name`, `push_token` FROM `refrigerator_member` WHERE `refrigerator_id` = ?", [id], (err, res) => {
+			conn.execute("SELECT `master`, `limit`, `invite_key`, `id`, `login_type`, `name`, `push_token`, 'push_setting' FROM `refrigerator_member` WHERE `refrigerator_id` = ?", [id], (err, res) => {
 				if (err) {
 					result(err, null);
 					return;
