@@ -1,5 +1,4 @@
 const Refrigerator = require('../models/refrigerator.model');
-const groupBy = require('json-groupby');
 
 exports.create = (req, res) => {
 	if (!req.body) {
@@ -60,7 +59,8 @@ exports.getMember = (req, res) => {
 					id: d.id,
 					login_type: d.login_type,
 					name: d.name,
-					push_token: d.push_token
+					push_token: d.push_token,
+					push_setting: d.push_setting
 				};
 
 				refrigerator.members.push(newMember);

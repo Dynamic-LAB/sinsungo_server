@@ -36,7 +36,16 @@ exports.update = (req, res) => {
 		});
 	}
 
-	User.update(req.body, (err, data) => {
+	const user = {
+		id: req.body.id,
+		login_type: req.body.login_type,
+		name: req.body.name,
+		push_token: (req.body.push_token === "") ? null : req.body.push_token,
+		refrigerator_id: (req.body.refrigerator_id === 0) ? null : req.body.refrigerator_id,
+		push_setting: req.body.push_setting
+	};
+
+	User.update(user, (err, data) => {
 		if (err) {
 			if (err.message == "not found") {
 				res.status(404).json({
