@@ -48,7 +48,6 @@ exports.getMember = (req, res) => {
 		} else {
 			const refrigerator = new Refrigerator({
 				master: data[0].master,
-				limit: data[0].limit,
 				invite_key: data[0].invite_key
 			});
 
