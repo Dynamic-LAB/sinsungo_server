@@ -3,13 +3,12 @@ const db = require('../config/db.config');
 module.exports = class Refrigerator {
 	constructor(refrigerator) {
 		this.master = refrigerator.master;
-		this.limit = refrigerator.limit;
-		this.inviteKey = refrigerator.inviteKey;
+		this.invite_key = refrigerator.invite_key;
 	};
 	
 	static create(refrigerator, result) {
 		db((conn) => {
-			conn.execute("INSERT INTO `refrigerator`(`master`, `invite_key`) VALUES(?, ?)", [refrigerator.master, refrigerator.inviteKey], (err, res) => {
+			conn.execute("INSERT INTO `refrigerator`(`master`, `invite_key`) VALUES(?, ?)", [refrigerator.master, refrigerator.invite_key], (err, res) => {
 			    if (err) {
 			      result(err, null);
 			      return;
@@ -42,7 +41,7 @@ module.exports = class Refrigerator {
 
 	static findAll(id, result) {
 		db((conn) => {
-			conn.execute("SELECT `master`, `limit`, `invite_key`, `id`, `login_type`, `name`, `push_token`, 'push_setting' FROM `refrigerator_member` WHERE `refrigerator_id` = ?", [id], (err, res) => {
+			conn.execute("SELECT `master`, `limit`, `invite_key`, `id`, `login_type`, `name`, `push_token`, `push_setting` FROM `refrigerator_member` WHERE `refrigerator_id` = ?", [id], (err, res) => {
 				if (err) {
 					result(err, null);
 					return;
@@ -56,7 +55,7 @@ module.exports = class Refrigerator {
 
 	static update(id, refrigerator, result) {
 		db((conn) => {
-			conn.execute("UPDATE `refrigerator` SET `master` = ?, `limit` = ?, `invite_key` = ? WHERE `id` = ?", [refrigerator.master, refrigerator.limit, refrigerator.inviteKey, id], (err, res) => {
+			conn.execute("UPDATE `refrigerator` SET `master` = ?, `limit` = ?, `invite_key` = ? WHERE `id` = ?", [refrigerator.master, refrigerator.limit, refrigerator.invite_key, id], (err, res) => {
 			    if (err) {
 			      result(err, null);
 			      return;

@@ -5,6 +5,7 @@ const refrigeratorIngredientController = require('../controllers/refrigeratoring
 
 // 냉장고, 멤버 api
 router.get('/:id', refrigeratorController.getMember);
+router.post('/', refrigeratorController.create);
 
 // 재료 api
 router.get('/ingredient/:id', refrigeratorIngredientController.getIngredient);
