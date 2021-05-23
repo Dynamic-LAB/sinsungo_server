@@ -9,7 +9,7 @@ module.exports = class Recipe {
 		this.description = recipe.description;
 		this.inRefIngredients = recipe.inRefIngredients;
 		this.notInRefIngredients = recipe.notInRefIngredients;
-	}
+	};
 
 	static findById(id, start, end, query = '', result) {
 		db((conn) => {
@@ -28,5 +28,24 @@ module.exports = class Recipe {
 			});
 			conn.release();
 		});
-	}
+	};
+
+	static findAll(result) {
+		db((conn) => {
+			conn.execute("SELECT * FROM `ingredient`", (err, res) => {
+				if (err) {
+					result(err, null);
+					return;
+				}
+
+				if (res.length >= 1) {
+					result(null, res);
+					return;
+				}
+
+				result({ message: "not found" }, null);
+			});
+			conn.release();
+		});
+	};
 };
