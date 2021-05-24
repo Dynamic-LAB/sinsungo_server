@@ -45,3 +45,19 @@ exports.getRecipe = (req, res) => {
 		}
 	});
 };
+
+exports.getIngredients = (req, res) => {
+	Recipe.findAll((err, data) => {
+		if (err) {
+			if (err.message == "not found") {
+				res.status(404).json({
+					message: err.message
+				});
+			} else {
+				res.status(500).json({
+					message: err.message
+				});
+			}
+		} else res.status(200).json(data);
+	});
+};

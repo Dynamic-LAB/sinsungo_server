@@ -14,15 +14,15 @@ module.exports = class Refrigerator {
 			      return;
 			    }
 
-				result(null, refrigerator);
+				result(null, { id: res.insertId });
 			});
 			conn.release();
 		});
 	};
 
-	static findOne(id, result) {
+	static findOne(inviteKey, result) {
 		db((conn) => {
-			conn.execute("SELECT * FROM `refrigerator` WHERE `id` = ?", id, (err, res) => {
+			conn.execute("SELECT `id` FROM `refrigerator` WHERE `invite_key` = ?", [inviteKey], (err, res) => {
 				if (err) {
 					result(err, null);
 					return;
@@ -33,7 +33,7 @@ module.exports = class Refrigerator {
 					return;
 				}
 
-				result(null, null);
+				result({ message: "not found" }, null);
 			});
 			conn.release();
 		});

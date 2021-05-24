@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const Refrigerator = require('../models/refrigerator.model');
 
 exports.login = (req, res) => {
 	if (!req.body) {
@@ -57,6 +58,44 @@ exports.update = (req, res) => {
 				});
 			}
 		} else res.status(200).json(data);
+	});
+};
+
+exports.invite = (req, res) => {
+	if (!req.body) {
+		res.status(400).json({
+			message: "empty body"
+		});
+	}
+
+	Refrigerator.findOne(req.body.inviteKey, (err, data) => {
+		if (err) {
+			if (err.message == "not found") {
+				res.status(404).json({
+					message: "refrigerator not found"
+				});
+			} else {
+				res.status(500).json({
+					message: err.message
+				});
+			}
+		} else {
+			req.body.user.refrigerator_id = data.id;
+
+			User.update(req.body.user, (err, data) => {
+				if (err) {
+					if (err.message == "not found") {
+						res.status(404).json({
+							message: err.message
+						});
+					} else {
+						res.status(500).json({
+							message: err.message
+						});
+					}
+				} else res.status(200).json(data);
+			});
+		}
 	});
 };
 
