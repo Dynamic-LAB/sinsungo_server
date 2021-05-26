@@ -30,6 +30,28 @@ exports.login = (req, res) => {
 	});
 };
 
+exports.findOne = (req, res) => {
+	if (!req.body) {
+		res.status(400).json({
+			message: "empty body"
+		});
+	}
+
+	User.findOne(req.body, (err, data) => {
+		if (err) {
+			if (err.message == "not found") {
+				res.status(404).json({
+					message: err.message
+				});
+			} else {
+				res.status(500).json({
+					message: err.message
+				});
+			}
+		} else res.status(200).json(data);
+	});
+};
+
 exports.update = (req, res) => {
 	if (!req.body) {
 		res.status(400).json({
@@ -100,7 +122,7 @@ exports.invite = (req, res) => {
 };
 
 exports.delete = (req, res) => {
-	User.delete(req.params.id, req.body.login_type,(err, data) => {
+	User.delete(req.body, (err, data) => {
 		if (err) {
 			if (err.message == "not found") {
 				res.status(404).json({
