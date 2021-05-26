@@ -23,7 +23,7 @@ module.exports = class User {
 
 	static findOne(user, result) {
 		db((conn) => {
-			conn.execute("SELECT * FROM `user` WHERE `id` = ? and `login_type` = ?", [user.id, user.type], (err, res) => {
+			conn.execute("SELECT * FROM `user` WHERE `id` = ? and `login_type` = ?", [user.id, user.login_type], (err, res) => {
 				if (err) {
 					result(err, null);
 					return;
@@ -77,7 +77,7 @@ module.exports = class User {
 
 	static delete(user, result) {
 		db((conn) => {
-			conn.execute("DELETE FROM `user` WHERE `id` = ? and `login_type` = ?", [user.id, user.type], (err, res) => {
+			conn.execute("DELETE FROM `user` WHERE `id` = ? and `login_type` = ?", [user.id, user.login_type], (err, res) => {
 				if (err) {
 					result(err, null);
 					return;

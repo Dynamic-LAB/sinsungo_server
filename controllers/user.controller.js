@@ -8,7 +8,7 @@ exports.login = (req, res) => {
 		});
 	}
 
-	User.findOne(req.body.id, req.body.login_type, (err, data) => {
+	User.findOne(req.body, (err, data) => {
 		if (err) {
 			res.status(500).json({
 				message: err.message
