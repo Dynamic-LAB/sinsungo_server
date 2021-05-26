@@ -11,19 +11,29 @@ module.exports = class RefrigeratorIngredient {
 		this.expiration_date = refrigeratorIngredient.expiration_date;
 	};
 	
-	static create(refingredient, result) {
+	static create(ingredients, result) {
 		db((conn) => {
-			conn.execute(
-				"INSERT INTO `refrigeratoringredient`(`category`, `name`, `amount`, `unit`, `expiration_type`, `expiration_date`, `refrigerator_id`) VALUES(?, ?, ?, ?, ?, ?, ?)", 
-				[refingredient.category, refingredient.name, refingredient.amount, refingredient.unit, refingredient.expiration_type, refingredient.expiration_date, refingredient.id],
-				(err, res) => {
-				    if (err) {
-				      result(err, null);
-				      return;
-				    }
+			conn.query(
+				"INSERT INTO `refrigeratoringredient`(`category`, `name`, `amount`, `unit`, `expiration_type`, `expiration_date`, `refrigerator_id`) VALUES ?",
+				[ingredients], (err, res) => {
 
-				    refingredient.id = res.insertId;
-					result(null, refingredient);
+				if (err) {
+				  result(err, null);
+				  return;
+				}
+
+				ingredients = ingredients.map(ingredient => new RefrigeratorIngredient(
+					{
+						id: res.insertId,
+						category: ingredient[0],
+						name: ingredient[1],
+						amount: ingredient[2],
+						unit: ingredient[3],
+						expiration_type: ingredient[4],
+						expiration_date: ingredient[5]
+					}
+				));
+				result(null, ingredients);
 			});
 			conn.release();
 		});

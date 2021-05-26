@@ -7,17 +7,19 @@ exports.create = (req, res) => {
 		});
 	}
 
-	const refrigeratorIngredient = new RefrigeratorIngredient({
-		id: req.body.id,
-		category: req.body.category,
-		name: req.body.name,
-		amount: req.body.amount,
-		unit:req.body.unit,
-		expiration_type: req.body.expiration_type,
-		expiration_date: req.body.expiration_date,
-	});
+	const ingredients = [];
 
-	RefrigeratorIngredient.create(refrigeratorIngredient, (err, data) => {
+	req.body.map(ingredient => ingredients.push([
+		ingredient.category,
+		ingredient.name,
+		ingredient.amount,
+		ingredient.unit,
+		ingredient.expiration_type,
+		ingredient.expiration_date,
+		ingredient.id
+	]));
+
+	RefrigeratorIngredient.create(ingredients, (err, data) => {
 		if (err) {
 			res.status(500).json({
 				message: err.message
