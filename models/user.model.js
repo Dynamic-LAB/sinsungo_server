@@ -34,7 +34,7 @@ module.exports = class User {
 					return;
 				}
 
-				result({ message: "not found" }, null);
+				result(null, null);
 			});
 			conn.release();
 		});
