@@ -26,7 +26,6 @@ module.exports = class Diet {
 					  result(err, null);
 					  return;
 					}
-
 					result(null, {
 						id: res.insertId,
 						memo: diet.memo,
@@ -114,7 +113,7 @@ module.exports = class Diet {
 			let sql1 = "DELETE FROM `dietingredient` WHERE `diet_id` = ? AND `ingredient_id` IN (?); ";
 			let sql2 = "INSERT INTO `dietingredient`(`diet_id`, `ingredient_id`) VALUES ?; ";
 
-			conn.query(sql1 + sql2, [dietId, deletes, inserts], (err, res) => {
+			conn.query(sql1 + (inserts.length>0?sql2:""), [dietId, deletes, inserts], (err, res) => {
 				if (err) {
 					result(err, null);
 					return;
