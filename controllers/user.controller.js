@@ -101,22 +101,28 @@ exports.invite = (req, res) => {
 					message: err.message
 				});
 			}
-		} else {
-			req.body.user.refrigerator_id = data.id;
+		} else { // 해당 초대 코드의 냉장고 있을 때
+			if (data.limit === 0) { // 냉장고에 자리가 없을 때
+				res.status(412).json({
+					message: "max people"
+				})
+			} else { // 냉장고에 자리가 있을 때
+				req.body.user.refrigerator_id = data.id;
 
-			User.update(req.body.user, (err, data) => {
-				if (err) {
-					if (err.message == "not found") {
-						res.status(404).json({
-							message: err.message
-						});
-					} else {
-						res.status(500).json({
-							message: err.message
-						});
-					}
-				} else res.status(200).json(data);
-			});
+				User.update(req.body.user, (err, data) => {
+					if (err) {
+						if (err.message == "not found") {
+							res.status(404).json({
+								message: err.message
+							});
+						} else {
+							res.status(500).json({
+								message: err.message
+							});
+						}
+					} else res.status(200).json(data);
+				});
+			}
 		}
 	});
 };

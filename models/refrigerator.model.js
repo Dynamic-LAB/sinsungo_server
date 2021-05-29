@@ -22,7 +22,7 @@ module.exports = class Refrigerator {
 
 	static findOne(inviteKey, result) {
 		db((conn) => {
-			conn.execute("SELECT `id` FROM `refrigerator` WHERE `invite_key` = ?", [inviteKey], (err, res) => {
+			conn.execute("SELECT `id`, `limit` FROM `refrigerator` WHERE `invite_key` = ?", [inviteKey], (err, res) => {
 				if (err) {
 					result(err, null);
 					return;
