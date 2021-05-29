@@ -7,9 +7,12 @@ exports.create = (req, res) => {
 		});
 	}
 
+	const master = req.body.refrigerator.master;
+	const inviteKey = Buffer.from(master + "/" + req.body.loginType, "utf8").toString('base64');
+
 	const refrigerator = new Refrigerator({
-		master: req.body.master,
-		invite_key: req.body.invite_key
+		master: master,
+		invite_key: inviteKey
 	});
 
 	Refrigerator.create(refrigerator, (err, data) => {
