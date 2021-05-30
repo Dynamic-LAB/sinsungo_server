@@ -31,12 +31,13 @@ exports.create = (req, res) => {
                 message: err.message
             });
         } else {
+            
             let values = []
-
             // dietingredient 테이블에 삽입 될 재료 값 가공
-            req.body.ingredients.map(ingredient => values.push([data.id, ingredient.id]));
-
+            req.body.ingredients.map(ingredient => {values.push([data.id, ingredient.id])});
             // 가공 한 재료 값들 dietingredient 테이블에 삽입
+            
+            if(values.length>0){
             await Diet.createPivot(values, (err) => {
                 if (err) {
                     res.status(500).json({
@@ -47,6 +48,11 @@ exports.create = (req, res) => {
                     res.status(201).json(data);
                 }
             });
+        }else{
+            res.status(201).json({
+                message: "Empty Ingredient"
+            });
+        }
         }
     });
 };
@@ -119,7 +125,7 @@ exports.update = (req, res) => {
                 });
             }
         } else {
-            // 새로 추가 된 재료 목록
+            // 새로 추가 된 재료 목록 (레시피id , 재료id)
             let inserts = req.body[1].ingredients.filter(x => !req.body[0].ingredients.includes(x)).map(x => [data.id, x.id]);
             // 제거 된 재료 목록
             let deletes = req.body[0].ingredients.filter(x => !req.body[1].ingredients.includes(x)).map(x => x.id);

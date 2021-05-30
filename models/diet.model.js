@@ -26,7 +26,6 @@ module.exports = class Diet {
 					  result(err, null);
 					  return;
 					}
-
 					result(null, {
 						id: res.insertId,
 						memo: diet.memo,
@@ -110,11 +109,11 @@ module.exports = class Diet {
 
 	// 식단의 재료 수정 함수 - dietingredient에서 삽입 또는 삭제
 	static updateIngredients(dietId, inserts, deletes, result) {
+		if(deletes[0]!=null||inserts.length>0){
 		db((conn) => {
 			let sql1 = "DELETE FROM `dietingredient` WHERE `diet_id` = ? AND `ingredient_id` IN (?); ";
 			let sql2 = "INSERT INTO `dietingredient`(`diet_id`, `ingredient_id`) VALUES ?; ";
-
-			conn.query(sql1 + sql2, [dietId, deletes, inserts], (err, res) => {
+			conn.query(sql1 + (inserts.length>0?sql2:""), [dietId, deletes, inserts], (err, res) => {
 				if (err) {
 					result(err, null);
 					return;
@@ -129,6 +128,9 @@ module.exports = class Diet {
 			});
 			conn.release();
 		});
+	}else{
+		result(null);
+	}
 	};
 
 	static delete(id, result) {
