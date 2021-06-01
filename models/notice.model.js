@@ -9,7 +9,7 @@ module.exports = class Notice {
 
     static findAll(result) {
         db((conn) => {
-            conn.execute("SELECT `title`, `content`, `date` FROM `notice` ORDER BY `date` DESC LIMIT 20",
+            conn.execute("SELECT `title`, `content`, `date` FROM `notice` ORDER BY `date` DESC",
                 (err, res) => {
                     if (err) {
                         result(err, null);
