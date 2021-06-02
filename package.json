@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Dynamic-LAB/sinsungo_server#readme",
   "dependencies": {
     "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "dotenv": "^8.5.1",
     "express": "^4.17.1",
     "firebase-admin": "^9.9.0",

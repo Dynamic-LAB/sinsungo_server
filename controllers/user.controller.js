@@ -91,6 +91,7 @@ exports.invite = (req, res) => {
 	}
 
 	Refrigerator.findOne(req.body.inviteKey, (err, data) => {
+
 		if (err) {
 			if (err.message == "not found") {
 				res.status(404).json({

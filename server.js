@@ -8,6 +8,13 @@ const cron = require('node-cron');
 const admin = require('firebase-admin');
 const serAccount = require('./serviceAccountKey.json');
 
+const path = require('path');
+/*app.use(express.static(path.join(__dirname, '/front/build')));
+
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '/front/build/index.html'));
+});*/ 
+
 const userRouter = require('./routes/user.route');
 const refrigeratorRouter = require('./routes/refrigerator.route');
 const recipeRouter = require('./routes/recipe.route');
@@ -29,8 +36,8 @@ app.use('/shoppinglist', shoppingListRouter);
 app.use('/diet', dietRouter);
 app.use('/notice', noticeRouter);
 app.use('/notification', notificationRouter);
-
-
+const cors = require('cors');
+app.use(cors());
 /*
 app.get('/api/hello',(req,res)=>{
     res.send({message:'Hello Express!'});
@@ -61,7 +68,7 @@ app.get('/api/customers',(req,res)=>{
     'gender':'여자',
     'job':'고등학생',
   }
-  ]) ;
+  ]) ; 
 })
 
 // 404 처리 미들웨어(없는 라우터 주소로 요청 들어올 때)
