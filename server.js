@@ -36,8 +36,8 @@ app.use('/shoppinglist', shoppingListRouter);
 app.use('/diet', dietRouter);
 app.use('/notice', noticeRouter);
 app.use('/notification', notificationRouter);
-
-
+const cors = require('cors');
+app.use(cors());
 /*
 app.get('/api/hello',(req,res)=>{
     res.send({message:'Hello Express!'});
