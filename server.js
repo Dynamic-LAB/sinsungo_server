@@ -89,6 +89,9 @@ admin.initializeApp({
 // 알림 스케줄러
 cron.schedule("0 8 1-31 * *", () => {
    expiration();
+}, {
+    scheduled: true,
+    timezone: "Asia/Seoul"
 });
 
 app.listen(port,()=>console.log(`서버 온 ${port}`));
