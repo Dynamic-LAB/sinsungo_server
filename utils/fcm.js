@@ -21,7 +21,7 @@ function sendNotification(tokens, data) {
             Object.entries(d[1]).forEach(m => {
                 const message = {};
 
-                if (m.length === 1) {
+                if (m[1].length === 1) {
                     message["data"] = {
                         title: "유통기한 알림",
                         body: `유통기한이 ${m[1][0].date}일 남은 ${m[1][0].name}이(가) 있습니다`
