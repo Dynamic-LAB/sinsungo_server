@@ -58,7 +58,7 @@ module.exports = class RefrigeratorIngredient {
 		});
 	};
 
-	static findAll(id, result) {
+	static findAllById(id, result) {
 		db((conn) => {
 
 			conn.execute("SELECT `id`, `category`, `name`, `amount`, `unit`, `expiration_type`, `expiration_date`,now() as today FROM `refrigerator_ingredient` WHERE `refrigerator_id` = ?",
@@ -73,6 +73,22 @@ module.exports = class RefrigeratorIngredient {
 			conn.release();
 		});
 	};
+
+	static findAll(result) {
+		db((conn) => {
+
+			conn.execute("SELECT `refrigerator_id`, `id`, `name`, `expiration_type`, `expiration_date`,now() as today FROM `refrigerator_ingredient`",
+				(err, res) => {
+					if (err) {
+						result(err, null);
+						return;
+					}
+
+					result(null, res);
+				});
+			conn.release();
+		});
+	}
 
 	static update(refrigeratorId, refingredient, result) {
 		db((conn) => {
