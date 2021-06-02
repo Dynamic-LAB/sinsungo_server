@@ -8,7 +8,7 @@ const path = require('path');
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, '/front/build/index.html'));
-});*/
+});*/ 
 
 const userRouter = require('./routes/user.route');
 const refrigeratorRouter = require('./routes/refrigerator.route');
