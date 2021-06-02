@@ -3,7 +3,12 @@ const bodyParser = require('body-parser');
 const app= express();
 const morgan = require('morgan');
 const port = process.env.PORT || 5001;
+const path = require('path');
+/*app.use(express.static(path.join(__dirname, '/front/build')));
 
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '/front/build/index.html'));
+});*/
 
 const userRouter = require('./routes/user.route');
 const refrigeratorRouter = require('./routes/refrigerator.route');
@@ -54,7 +59,7 @@ app.get('/api/customers',(req,res)=>{
     'gender':'여자',
     'job':'고등학생',
   }
-  ]) ;
+  ]) ; 
 })
 
 // 404 처리 미들웨어(없는 라우터 주소로 요청 들어올 때)

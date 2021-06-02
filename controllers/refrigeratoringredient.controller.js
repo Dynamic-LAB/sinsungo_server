@@ -6,7 +6,6 @@ exports.create = (req, res) => {
 			message: "empty body" 
 		});
 	}
-
 	const ingredients = [];
 
 	req.body.map(ingredient => ingredients.push([
@@ -18,7 +17,6 @@ exports.create = (req, res) => {
 		ingredient.expiration_date,
 		ingredient.id
 	]));
-
 	RefrigeratorIngredient.create(ingredients, (err, data) => {
 		if (err) {
 			res.status(500).json({
