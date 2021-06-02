@@ -45,7 +45,7 @@ exports.findOne = (req, res) => {
 };
 
 exports.getIngredient = (req, res) => {
-	RefrigeratorIngredient.findAll(req.params.id, (err, data) => {
+	RefrigeratorIngredient.findAllById(req.params.id, (err, data) => {
 		if (err) {
 			res.status(500).json({
 				message: err.message

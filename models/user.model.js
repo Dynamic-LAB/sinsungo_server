@@ -40,9 +40,11 @@ module.exports = class User {
 		});
 	};
 
-	static findAll(result) {
+	static findAll(ids, result) {
 		db((conn) => {
-			conn.execute("SELECT * FROM `user`", (err, res) => {
+			let sql = "SELECT `push_token` FROM `user` WHERE `push_setting` = 1 AND `push_token` IS NOT NULL AND `refrigerator_id` = ?; "
+			sql = sql.repeat(ids.length);
+			conn.query(sql, [...ids], (err, res) => {
 				if (err) {
 					result(err, null);
 					return;

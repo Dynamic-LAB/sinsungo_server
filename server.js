@@ -3,6 +3,11 @@ const bodyParser = require('body-parser');
 const app= express();
 const morgan = require('morgan');
 const port = process.env.PORT || 5001;
+const expiration = require('./utils/expiration');
+const cron = require('node-cron');
+const admin = require('firebase-admin');
+const serAccount = require('./serviceAccountKey.json');
+
 const path = require('path');
 /*app.use(express.static(path.join(__dirname, '/front/build')));
 
@@ -16,6 +21,8 @@ const recipeRouter = require('./routes/recipe.route');
 const searchRouter = require('./routes/search.route');
 const shoppingListRouter = require('./routes/shoppinglist.route');
 const dietRouter = require('./routes/diet.route');
+const noticeRouter = require('./routes/notice.route');
+const notificationRouter = require('./routes/notification.route');
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -27,6 +34,8 @@ app.use('/recipe', recipeRouter);
 app.use('/search', searchRouter);
 app.use('/shoppinglist', shoppingListRouter);
 app.use('/diet', dietRouter);
+app.use('/notice', noticeRouter);
+app.use('/notification', notificationRouter);
 
 
 /*
@@ -77,6 +86,16 @@ app.use((err, req, res, next) => {
 			message: err.message
 		}
 	});
+});
+
+// 파이어베이스 인증
+admin.initializeApp({
+    credential: admin.credential.cert(serAccount)
+});
+
+// 알림 스케줄러
+cron.schedule("0 8 1-31 * *", () => {
+   expiration();
 });
 
 app.listen(port,()=>console.log(`서버 온 ${port}`));

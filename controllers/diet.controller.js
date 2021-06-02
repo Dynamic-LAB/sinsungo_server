@@ -37,22 +37,20 @@ exports.create = (req, res) => {
             req.body.ingredients.map(ingredient => {values.push([data.id, ingredient.id])});
             // 가공 한 재료 값들 dietingredient 테이블에 삽입
             
-            if(values.length>0){
-            await Diet.createPivot(values, (err) => {
-                if (err) {
-                    res.status(500).json({
-                        message: err.message
-                    });
-                } else {
-                    data.ingredients = req.body.ingredients;
-                    res.status(201).json(data);
-                }
-            });
-        }else{
-            res.status(201).json({
-                message: "Empty Ingredient"
-            });
-        }
+            if (values.length > 0) {
+                await Diet.createPivot(values, (err) => {
+                    if (err) {
+                        res.status(500).json({
+                            message: err.message
+                        });
+                    } else {
+                        data.ingredients = req.body.ingredients;
+                        res.status(201).json(data);
+                    }
+                });
+            } else {
+                res.status(201).json(data);
+            }
         }
     });
 };
