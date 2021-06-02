@@ -6,7 +6,7 @@ exports.create = (req, res) => {
 			message: "empty body" 
 		});
 	}
-
+	
 	const master = req.body.refrigerator.master;
 	const inviteKey = Buffer.from(master + "/" + req.body.loginType, "utf8").toString('base64');
 
@@ -43,6 +43,7 @@ exports.findOne = (req, res) => {
 };
 
 exports.getMember = (req, res) => {
+	console.log("멤버요청",req.params)
 	Refrigerator.findAll(req.params.id, (err, data) => {
 		if (err) {
 			res.status(500).json({
