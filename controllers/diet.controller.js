@@ -197,7 +197,7 @@ const dataProcessing = (data) => {
                 expiration_date: d.expiration_date
             };
 
-            diet.ingredients.push(ingredient);
+            if (ingredient.id != null) diet.ingredients.push(ingredient);
         });
 
         diets.push(diet);
