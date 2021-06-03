@@ -1,5 +1,4 @@
 const Recipe = require('../models/recipe.model');
-const groupBy = require('json-groupby');
 
 exports.getRecipe = (req, res) => {
 	let id = req.params.id;
@@ -20,20 +19,20 @@ exports.getRecipe = (req, res) => {
 			}
 		} else {
 			const recipes = []
-			const recipeData = Object.entries(groupBy(data[0], ['id']));
+			const recipeData = data[0].reduce(reducer, []).map(key => data[0].filter(d => d.id === key));
 
 			recipeData.forEach(x => {
 				const recipe = new Recipe({
-					id: x[1][0].id,
-					name: x[1][0].name,
-					thumbnail: x[1][0].thumbnail,
-					url: x[1][0].url,
-					description: x[1][0].description,
+					id: x[0].id,
+					name: x[0].name,
+					thumbnail: x[0].thumbnail,
+					url: x[0].url,
+					description: x[0].description,
 					inRefIngredients: [],
 					notInRefIngredients: []
 				});
 
-				x[1].forEach(d => {
+				x.forEach(d => {
 					if (d.ingredient_id != null) recipe.inRefIngredients.push(d.ingredient_name);
 					else recipe.notInRefIngredients.push(d.ingredient_name);
 				});
@@ -60,4 +59,14 @@ exports.getIngredients = (req, res) => {
 			}
 		} else res.status(200).json(data);
 	});
+};
+
+const reducer = (acc, val) => {
+	const key = val.id;
+
+	if (!acc.includes(key)) {
+		acc.push(key);
+	}
+
+	return acc
 };
