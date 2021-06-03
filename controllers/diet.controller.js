@@ -127,7 +127,7 @@ exports.update = (req, res) => {
             let inserts = req.body[1].ingredients.filter(x => !req.body[0].ingredients.includes(x)).map(x => [data.id, x.id]);
             // 제거 된 재료 목록
             let deletes = req.body[0].ingredients.filter(x => !req.body[1].ingredients.includes(x)).map(x => x.id);
-
+     
             // dietingredient 테이블에서 삽입 또는 삭제
             Diet.updateIngredients(data.id, inserts, deletes, (err) => {
                 if (err) {
