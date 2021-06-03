@@ -23,12 +23,24 @@ module.exports = class Notification {
 
     static findAll(id, result) {
         db((conn) => {
-            conn.execute("SELECT `content` FROM `notification` WHERE `refrigerator_id` = ?", [id], (err, res) => {
+            conn.execute("SELECT `id`,`content` FROM `notification` WHERE `refrigerator_id` = ?", [id], (err, res) => {
                 if (err) {
                     result(err, null);
                     return;
                 }
 
+                result(null, res);
+            });
+            conn.release();
+        });
+    };
+    static delete(id, result) {
+        db((conn) => {
+            conn.execute("DELETE FROM `notification` WHERE (`id` = ?)", [id], (err, res) => {
+                if (err) {
+                    result(err, null);
+                    return;
+                }
                 result(null, res);
             });
             conn.release();

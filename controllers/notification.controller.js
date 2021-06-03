@@ -9,3 +9,13 @@ exports.findAll = (req, res) => {
         } else res.status(200).json(data);
     });
 };
+
+exports.delete = (req, res) => {
+    Notification.delete(req.params.id, (err, data) => {
+        if (err) {
+            res.status(500).json({
+                message: err.message
+            });
+        } else res.status(200).json(data);
+    });
+};
