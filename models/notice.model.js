@@ -9,7 +9,7 @@ module.exports = class Notice {
 
     static findAll(result) {
         db((conn) => {
-            conn.execute("SELECT `title`, `content`, `date` FROM `notice` ORDER BY `date` DESC",
+            conn.execute("SELECT `id`,`title`, `content`, `date` FROM `notice` ORDER BY `date` DESC",
                 (err, res) => {
                     if (err) {
                         result(err, null);
@@ -17,6 +17,20 @@ module.exports = class Notice {
                     }
 
                     result(null, res);
+            });
+            conn.release();
+        });
+    };
+    static findOne(id,result) {
+        db((conn) => {
+            conn.execute("SELECT `id`,`title`, `content`, `date` FROM `notice` WHERE `id`= ?",[id],
+                (err, res) => {
+                    if (err) {
+                        result(err, null);
+                        return;
+                    }
+
+                    result(null, res[0]);
             });
             conn.release();
         });
